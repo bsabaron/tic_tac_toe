@@ -1,19 +1,56 @@
 name: tic_tac_toe
-description: "A new Flutter project."
-publish_to: 'none'
-version: 0.1.0
+description: "Tic-Tac-Toe game"
+publish_to: "none"
+version: 1.0.0
 
 environment:
   sdk: ^3.9.0
 
+workspace:
+  - packages/core
+  - packages/game
+
 dependencies:
   flutter:
     sdk: flutter
+  game:
+    path: packages/game
+  flutter_riverpod: ^3.0.3
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^5.0.0
+  melos: ^7.3.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
+
+melos:
+  command:
+    bootstrap:
+      runPubGetInParallel: true
+
+  scripts:
+    # Get dependencies
+    get:
+      description: Get dependencies for all packages
+      run: melos exec -- flutter pub get
+
+    # Clean all packages
+    clean:
+      description: Clean all packages
+      run: melos exec -- flutter clean
+
+    # Run tests
+    test:
+      description: Run tests in all packages
+      run: melos exec -- flutter test
+
+    # Analyze code
+    analyze:
+      description: Analyze code in all packages
+      run: melos exec -- flutter analyze
+
+    # Format code
+    format:
+      description: Format code in all packages
+      run: melos exec -- dart format .

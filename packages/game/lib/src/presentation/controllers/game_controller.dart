@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game/src/domain/game_domain.dart';
 import 'package:game/src/presentation/models/game_state.dart';
+import 'package:game/src/presentation/controllers/score_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'game_controller.g.dart';
@@ -37,6 +38,9 @@ class GameController extends _$GameController {
         .getWinnerCombination(board: state.board, player: state.currentPlayer);
 
     if (winnerCombination != null) {
+      await ref
+          .read(scoreControllerProvider.notifier)
+          .incrementScore(state.currentPlayer.id);
       state = state.copyWith(
         board: state.board,
         status: GameStatus.won,

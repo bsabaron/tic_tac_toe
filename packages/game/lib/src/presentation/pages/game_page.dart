@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:game/src/presentation/controllers/score_controller.dart';
 import 'package:game/src/presentation/game_presentation.dart';
@@ -36,6 +37,10 @@ class GamePage extends ConsumerWidget {
                                   player1.id == gameState.currentPlayer.id,
                               score: scores[player1.id] ?? 0,
                             ),
+                          ).animate().slideX(
+                            begin: -1.0,
+                            duration: 500.ms,
+                            curve: Curves.linearToEaseOut,
                           ),
                           Text('vs', style: TextStyle(fontSize: 20)),
                           Expanded(
@@ -45,13 +50,21 @@ class GamePage extends ConsumerWidget {
                                   player2.id == gameState.currentPlayer.id,
                               score: scores[player2.id] ?? 0,
                             ),
+                          ).animate().slideX(
+                            begin: 1.0,
+                            duration: 500.ms,
+                            curve: Curves.linearToEaseOut,
                           ),
                         ],
                       ),
                   loading: () => const SizedBox.shrink(),
                   error: (_, _) => const SizedBox.shrink(),
                 ),
-                GameStatusSection(gameState: gameState),
+                GameStatusSection(gameState: gameState).animate().scale(
+                  delay: 500.ms,
+                  duration: 200.ms,
+                  curve: Curves.bounceInOut,
+                ),
                 const BoardWidget(),
                 FilledButton(
                   onPressed: () {

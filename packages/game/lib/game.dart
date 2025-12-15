@@ -1,14 +1,11 @@
 /// Game package exports
-library game;
+library;
 
 // Domain layer exports
-// export 'src/domain/entities/board.dart';
-// export 'src/domain/repositories/game_repository.dart';
-// export 'src/domain/usecases/play_move_usecase.dart';
+export 'src/domain/game_domain.dart';
 
 // Data layer exports
-// export 'src/data/repositories/game_repository_impl.dart';
+export 'src/data/game_data.dart';
 
 // Presentation layer exports
-// export 'src/presentation/providers/game_provider.dart';
-// export 'src/presentation/widgets/board_widget.dart';
+export 'src/presentation/game_presentation.dart';

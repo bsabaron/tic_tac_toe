@@ -9,8 +9,10 @@ class GamePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final gameState = ref.watch(gameControllerProvider);
-    final scoresAsync = ref.watch(scoreControllerProvider);
+    final currentPlayer = ref.watch(
+      gameControllerProvider.select((state) => state.currentPlayer),
+    );
+    final scores = ref.watch(scoreControllerProvider);
     final player1 = ref.read(gameControllerProvider.notifier).player1;
     final player2 = ref.read(gameControllerProvider.notifier).player2;
 
@@ -24,46 +26,44 @@ class GamePage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 32,
               children: [
-                scoresAsync.when(
-                  data:
-                      (scores) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        spacing: 16,
-                        children: [
-                          Expanded(
-                            child: PlayerWithScoreCard(
-                              player: player1,
-                              isPlaying:
-                                  player1.id == gameState.currentPlayer.id,
-                              score: scores[player1.id] ?? 0,
-                            ),
-                          ).animate().slideX(
-                            begin: -1.0,
-                            duration: 500.ms,
-                            curve: Curves.linearToEaseOut,
+                scores
+                        .whenData(
+                          (scores) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            spacing: 16,
+                            children: [
+                              Expanded(
+                                child: PlayerWithScoreCard(
+                                  player: player1,
+                                  isPlaying: player1.id == currentPlayer.id,
+                                  score: scores[player1.id] ?? 0,
+                                ),
+                              ).animate().slideX(
+                                begin: -1.0,
+                                duration: 500.ms,
+                                curve: Curves.linearToEaseOut,
+                              ),
+                              Text('vs', style: TextStyle(fontSize: 20)),
+                              Expanded(
+                                child: PlayerWithScoreCard(
+                                  player: player2,
+                                  isPlaying: player2.id == currentPlayer.id,
+                                  score: scores[player2.id] ?? 0,
+                                ),
+                              ).animate().slideX(
+                                begin: 1.0,
+                                duration: 500.ms,
+                                curve: Curves.linearToEaseOut,
+                              ),
+                            ],
                           ),
-                          Text('vs', style: TextStyle(fontSize: 20)),
-                          Expanded(
-                            child: PlayerWithScoreCard(
-                              player: player2,
-                              isPlaying:
-                                  player2.id == gameState.currentPlayer.id,
-                              score: scores[player2.id] ?? 0,
-                            ),
-                          ).animate().slideX(
-                            begin: 1.0,
-                            duration: 500.ms,
-                            curve: Curves.linearToEaseOut,
-                          ),
-                        ],
-                      ),
-                  loading: () => const SizedBox.shrink(),
-                  error: (_, _) => const SizedBox.shrink(),
-                ),
-                GameStatusSection(gameState: gameState).animate().scale(
+                        )
+                        .value ??
+                    const SizedBox.shrink(),
+                GameStatusSection().animate().scale(
                   delay: 500.ms,
                   duration: 200.ms,
-                  curve: Curves.bounceInOut,
+                  curve: Curves.linearToEaseOut,
                 ),
                 const BoardWidget(),
                 FilledButton(

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:game/src/presentation/models/game_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:game/src/presentation/game_presentation.dart';
 
-class GameStatusSection extends StatelessWidget {
-  final GameState gameState;
-
-  const GameStatusSection({super.key, required this.gameState});
+class GameStatusSection extends ConsumerWidget {
+  const GameStatusSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     String statusText;
     Color statusColor;
+
+    final gameState = ref.watch(
+      gameControllerProvider.select((state) => state),
+    );
 
     switch (gameState.status) {
       case GameStatus.playing:

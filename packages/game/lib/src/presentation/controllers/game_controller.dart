@@ -40,7 +40,7 @@ class GameController extends _$GameController {
     if (winnerCombination != null) {
       await ref
           .read(scoreControllerProvider.notifier)
-          .incrementScore(state.currentPlayer.id);
+          .incrementPlayerScore(state.currentPlayer.id);
       state = state.copyWith(
         board: state.board,
         status: GameStatus.won,

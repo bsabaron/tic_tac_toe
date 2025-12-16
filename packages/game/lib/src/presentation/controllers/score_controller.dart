@@ -14,12 +14,12 @@ class ScoreController extends _$ScoreController {
 
   @override
   Future<Map<String, int>> build() async {
-    return await _getScoresUseCase.getAllScores();
+    return await _getScoresUseCase.getScores();
   }
 
-  Future<void> incrementScore(String playerId) async {
-    await _incrementScoreUseCase.incrementScore(playerId);
-    final updatedScores = await _getScoresUseCase.getAllScores();
+  Future<void> incrementPlayerScore(String playerId) async {
+    await _incrementScoreUseCase.incrementPlayerScore(playerId);
+    final updatedScores = await _getScoresUseCase.getScores();
     state = AsyncValue.data(updatedScores);
   }
 

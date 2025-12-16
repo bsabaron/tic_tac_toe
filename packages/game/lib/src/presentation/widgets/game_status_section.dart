@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:game/src/presentation/game_presentation.dart';
 
@@ -33,6 +34,10 @@ class GameStatusSection extends ConsumerWidget {
       statusText,
       style: TextStyle(fontSize: 20, color: statusColor),
       textAlign: TextAlign.center,
+    ).animate().fadeIn(
+      delay: 500.ms,
+      duration: 300.ms,
+      curve: Curves.linearToEaseOut,
     );
   }
 }

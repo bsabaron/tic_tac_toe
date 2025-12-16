@@ -51,9 +51,12 @@ class _CellWidgetState extends ConsumerState<CellWidget>
 
   @override
   Widget build(BuildContext context) {
+    // Just rebuild when this cell changed
     final Cell cell = ref.watch(
       gameControllerProvider.select((state) => state.board.cells[widget.index]),
     );
+
+    // Just rebuild when this cell is a winner cell
     final bool isWinnerCell = ref.watch(
       gameControllerProvider.select(
         (state) => state.winnerCombination?.contains(widget.index) ?? false,

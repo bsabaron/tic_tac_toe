@@ -71,7 +71,13 @@ class _CellWidgetState extends ConsumerState<CellWidget>
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.5),
+            width: isWinnerCell ? 2 : 1,
+            color:
+                isWinnerCell
+                    ? Colors.green
+                    : Theme.of(
+                      context,
+                    ).colorScheme.outline.withValues(alpha: 0.5),
           ),
         ),
         child: Center(

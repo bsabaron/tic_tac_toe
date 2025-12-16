@@ -60,9 +60,9 @@ class GamePage extends ConsumerWidget {
                         )
                         .value ??
                     const SizedBox.shrink(),
-                GameStatusSection().animate().scale(
+                GameStatusSection().animate().fadeIn(
                   delay: 500.ms,
-                  duration: 200.ms,
+                  duration: 300.ms,
                   curve: Curves.linearToEaseOut,
                 ),
                 const BoardWidget(),

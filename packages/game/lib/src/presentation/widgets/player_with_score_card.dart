@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:game/src/domain/game_domain.dart';
 
 class PlayerWithScoreCard extends StatelessWidget {
@@ -33,14 +34,19 @@ class PlayerWithScoreCard extends StatelessWidget {
                     color: player.color,
                   ),
                 ),
-                Container(
-                  width: 20,
-                  height: 3,
-                  decoration: BoxDecoration(
-                    color: isPlaying ? player.color : Colors.transparent,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
+                isPlaying
+                    ? Container(
+                      width: 20,
+                      height: 3,
+                      decoration: BoxDecoration(
+                        color: player.color,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ).animate().scale(
+                      duration: 500.ms,
+                      curve: Curves.linearToEaseOut,
+                    )
+                    : SizedBox(height: 3),
               ],
             ),
             RichText(

@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +18,15 @@ class GamePage extends ConsumerWidget {
     final player2 = ref.read(gameControllerProvider.notifier).player2;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Tic-Tac-Toe')),
+      appBar: AppBar(
+        title: const Text('Tic-Tac-Toe'),
+        actions: [
+          IconButton(
+            onPressed: () => _showResetScoresDialog(context, ref),
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -77,6 +86,19 @@ class GamePage extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showResetScoresDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder:
+          (context) => ConfirmationDialog(
+            title: 'Êtes-vous sûr de vouloir réinitialiser les scores ?',
+            onConfirm: () {
+              ref.read(scoreControllerProvider.notifier).resetScores();
+            },
+          ),
     );
   }
 }

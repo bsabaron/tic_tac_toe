@@ -1,9 +1,7 @@
 abstract class ScoreRepository {
-  Future<int> getScore(String playerId);
+  Future<Map<String, int>> getScores();
 
-  Future<void> incrementScore(String playerId);
+  Future<void> incrementPlayerScore(String playerId);
 
   Future<void> resetScores();
-
-  Future<Map<String, int>> getAllScores();
 }

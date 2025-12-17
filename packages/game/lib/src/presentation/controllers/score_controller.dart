@@ -11,16 +11,10 @@ class ScoreController extends _$ScoreController {
   );
   late final IncrementScoreUseCase _incrementScoreUseCase =
       IncrementScoreUseCase(_scoreRepository);
-  late final GetScoresUseCase _getScoresUseCase = GetScoresUseCase(
-    _scoreRepository,
-  );
-  late final ResetScoresUseCase _resetScoresUseCase = ResetScoresUseCase(
-    _scoreRepository,
-  );
 
   @override
   Future<Map<String, int>> build() async {
-    return await _getScoresUseCase.getScores();
+    return await _scoreRepository.getScores();
   }
 
   Future<void> incrementPlayerScore(String playerId) async {
@@ -31,7 +25,7 @@ class ScoreController extends _$ScoreController {
   }
 
   Future<void> resetScores() async {
-    await _resetScoresUseCase.resetScores();
+    await _scoreRepository.resetScores();
     state = const AsyncValue.data({});
   }
 }

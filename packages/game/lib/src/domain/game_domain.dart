@@ -5,6 +5,10 @@ export 'entities/board.dart';
 export 'entities/player.dart';
 export 'entities/cell.dart';
 
+// Extensions
+export 'extensions/board_extension.dart';
+export 'extensions/cell_extension.dart';
+
 // Use Cases
 export 'usecases/check_winner_usecase.dart';
 export 'usecases/make_move_usecase.dart';

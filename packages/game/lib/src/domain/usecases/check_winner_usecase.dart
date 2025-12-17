@@ -1,5 +1,4 @@
-import '../entities/board.dart';
-import '../entities/player.dart';
+import 'package:game/src/domain/game_domain.dart';
 
 class CheckWinnerUseCase {
   /// All winning combinations in a 3x3 Tic-Tac-Toe board

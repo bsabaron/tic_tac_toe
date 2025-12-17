@@ -6,8 +6,4 @@ class Cell {
   const Cell.empty() : player = null;
 
   const Cell.filled(this.player);
-
-  bool get isEmpty => player == null;
-
-  bool get isFilled => player != null;
 }

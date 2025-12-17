@@ -21,30 +21,36 @@ void main() {
     });
 
     test('should increment player score from 0 to 1', () async {
-      when(mockRepository.getScores()).thenAnswer((_) async => {});
+      final currentScores = <String, int>{};
+      final expectedScores = {player1: 1};
+      when(mockRepository.getScores()).thenAnswer((_) async => currentScores);
 
-      await useCase.incrementPlayerScore(player1);
+      final scores = await useCase.incrementPlayerScore(player1);
 
-      verify(mockRepository.getScores()).called(1);
-      verify(mockRepository.saveScores({player1: 1})).called(1);
+      verify(mockRepository.saveScores(expectedScores)).called(1);
+      expect(scores, expectedScores);
     });
 
     test('should increment existing player score', () async {
-      when(mockRepository.getScores()).thenAnswer((_) async => {player1: 2});
+      final currentScores = {player1: 2};
+      final expectedScores = {player1: 3};
+      when(mockRepository.getScores()).thenAnswer((_) async => currentScores);
 
-      await useCase.incrementPlayerScore(player1);
+      final scores = await useCase.incrementPlayerScore(player1);
 
-      verify(mockRepository.saveScores({player1: 3})).called(1);
+      verify(mockRepository.saveScores(expectedScores)).called(1);
+      expect(scores, expectedScores);
     });
 
     test('should handle different player IDs independently', () async {
-      when(
-        mockRepository.getScores(),
-      ).thenAnswer((_) async => {player1: 1, player2: 5});
+      final currentScores = {player1: 1, player2: 5};
+      final expectedScores = {player1: 2, player2: 5};
+      when(mockRepository.getScores()).thenAnswer((_) async => currentScores);
 
-      await useCase.incrementPlayerScore(player1);
+      final scores = await useCase.incrementPlayerScore(player1);
 
-      verify(mockRepository.saveScores({player1: 2, player2: 5})).called(1);
+      verify(mockRepository.saveScores(expectedScores)).called(1);
+      expect(scores, expectedScores);
     });
 
     test('should propagate exception from saveScores', () async {

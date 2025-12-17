@@ -7,7 +7,9 @@ class IncrementScoreUseCase {
 
   Future<Map<String, int>> incrementPlayerScore(String playerId) async {
     final scores = await _repository.getScores();
-    scores[playerId] = (scores[playerId] ?? 0) + 1;
-    return _repository.saveScores(scores);
+    Map<String, int> updatedScores = Map.from(scores);
+    updatedScores[playerId] = (scores[playerId] ?? 0) + 1;
+    await _repository.saveScores(updatedScores);
+    return updatedScores;
   }
 }

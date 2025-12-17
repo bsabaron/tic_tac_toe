@@ -8,8 +8,8 @@ import 'increment_score_usecase_test.mocks.dart';
 
 @GenerateMocks([ScoreRepository])
 void main() {
-  final player1 = 'id1';
-  final player2 = 'id2';
+  const player1 = 'id1';
+  const player2 = 'id2';
 
   group('IncrementScoreUseCase', () {
     late IncrementScoreUseCase useCase;

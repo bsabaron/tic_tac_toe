@@ -5,8 +5,8 @@ import 'package:game/src/domain/game_domain.dart';
 void main() {
   group('MakeMoveUseCase', () {
     final MakeMoveUseCase useCase = MakeMoveUseCase();
-    final Player player = Player(id: '1', symbol: 'X', color: Colors.blue);
-    final Player player2 = Player(id: '2', symbol: 'O', color: Colors.red);
+    const Player player = Player(id: 'id1', symbol: 'X', color: Colors.blue);
+    const Player player2 = Player(id: 'id2', symbol: 'O', color: Colors.red);
     late Board board;
 
     setUp(() {

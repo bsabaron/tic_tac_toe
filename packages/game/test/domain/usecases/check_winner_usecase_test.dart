@@ -8,8 +8,8 @@ import 'package:game/src/domain/usecases/check_winner_usecase.dart';
 void main() {
   group('CheckWinnerUseCase', () {
     final CheckWinnerUseCase useCase = CheckWinnerUseCase();
-    final Player player1 = Player(id: '1', symbol: 'X', color: Colors.blue);
-    final Player player2 = Player(id: '2', symbol: 'O', color: Colors.red);
+    const Player player1 = Player(id: 'id1', symbol: 'X', color: Colors.blue);
+    const Player player2 = Player(id: 'id2', symbol: 'O', color: Colors.red);
 
     test('should return null when no winner', () {
       final board = Board();

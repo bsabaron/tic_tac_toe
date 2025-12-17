@@ -6,10 +6,16 @@ part 'score_controller.g.dart';
 
 @riverpod
 class ScoreController extends _$ScoreController {
+  late final ScoreRepository _scoreRepository = ref.read(
+    scoreRepositoryProvider,
+  );
   late final IncrementScoreUseCase _incrementScoreUseCase =
-      IncrementScoreUseCase(ref.read(scoreRepositoryProvider));
+      IncrementScoreUseCase(_scoreRepository);
   late final GetScoresUseCase _getScoresUseCase = GetScoresUseCase(
-    ref.read(scoreRepositoryProvider),
+    _scoreRepository,
+  );
+  late final ResetScoresUseCase _resetScoresUseCase = ResetScoresUseCase(
+    _scoreRepository,
   );
 
   @override
@@ -25,8 +31,7 @@ class ScoreController extends _$ScoreController {
   }
 
   Future<void> resetScores() async {
-    final scoreRepository = ref.read(scoreRepositoryProvider);
-    await scoreRepository.resetScores();
+    await _resetScoresUseCase.resetScores();
     state = const AsyncValue.data({});
   }
 }

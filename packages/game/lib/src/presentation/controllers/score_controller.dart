@@ -18,8 +18,9 @@ class ScoreController extends _$ScoreController {
   }
 
   Future<void> incrementPlayerScore(String playerId) async {
-    await _incrementScoreUseCase.incrementPlayerScore(playerId);
-    final updatedScores = await _getScoresUseCase.getScores();
+    final updatedScores = await _incrementScoreUseCase.incrementPlayerScore(
+      playerId,
+    );
     state = AsyncValue.data(updatedScores);
   }
 

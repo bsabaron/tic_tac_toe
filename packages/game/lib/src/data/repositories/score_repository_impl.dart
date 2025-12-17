@@ -23,9 +23,10 @@ class ScoreRepositoryImpl implements ScoreRepository {
   }
 
   @override
-  Future<void> saveScores(Map<String, int> scores) async {
+  Future<Map<String, int>> saveScores(Map<String, int> scores) async {
     final jsonString = jsonEncode(scores);
     await SharedPreferencesService.setString(_scoresStorageKey, jsonString);
+    return scores;
   }
 
   @override

@@ -1,9 +1,13 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'cell.dart';
 
-class Board {
-  final List<Cell> cells;
+part 'board.freezed.dart';
 
-  Board() : cells = List.filled(9, Cell.empty());
+@freezed
+abstract class Board with _$Board {
+  const factory Board({required List<Cell> cells}) = _Board;
 
-  const Board.fromCells(this.cells) : assert(cells.length == 9);
+  factory Board.initial() {
+    return Board(cells: List.generate(9, (index) => Cell.empty()));
+  }
 }

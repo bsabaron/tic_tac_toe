@@ -15,7 +15,7 @@ void main() {
 
     test('isFull should return true when all cells are filled', () {
       final cells = List.generate(9, (index) => Cell.filled(player));
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       expect(board.isFull, true);
     });
@@ -23,13 +23,13 @@ void main() {
     test('isFull should return false when at least one cell is empty', () {
       final cells = List.generate(8, (index) => Cell.filled(player));
       cells.add(Cell.empty());
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       expect(board.isFull, false);
     });
 
     test('isFull should return false for an empty board', () {
-      final board = Board();
+      final board = Board.initial();
 
       expect(board.isFull, false);
     });

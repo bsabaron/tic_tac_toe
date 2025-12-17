@@ -27,7 +27,7 @@ class GameController extends _$GameController {
     if (state.board.cells[index].isFilled) return;
     if (state.status != GameStatus.playing) return;
 
-    _makeMoveUseCase.makeMove(
+    final updatedBoard = _makeMoveUseCase.makeMove(
       board: state.board,
       index: index,
       player: state.currentPlayer,
@@ -35,14 +35,14 @@ class GameController extends _$GameController {
 
     // Check for winner
     final List<int>? winnerCombination = _checkWinnerUseCase
-        .getWinnerCombination(board: state.board, player: state.currentPlayer);
+        .getWinnerCombination(board: updatedBoard, player: state.currentPlayer);
 
     if (winnerCombination != null) {
       await ref
           .read(scoreControllerProvider.notifier)
           .incrementPlayerScore(state.currentPlayer.id);
       state = state.copyWith(
-        board: state.board,
+        board: updatedBoard,
         status: GameStatus.won,
         winnerCombination: winnerCombination,
       );
@@ -50,15 +50,15 @@ class GameController extends _$GameController {
     }
 
     // Check for draw
-    if (state.board.isFull) {
-      state = state.copyWith(board: state.board, status: GameStatus.draw);
+    if (updatedBoard.isFull) {
+      state = state.copyWith(board: updatedBoard, status: GameStatus.draw);
       return;
     }
 
     // Switch to next player
     final nextPlayer =
         state.currentPlayer.id == _player1.id ? _player2 : _player1;
-    state = state.copyWith(board: state.board, currentPlayer: nextPlayer);
+    state = state.copyWith(board: updatedBoard, currentPlayer: nextPlayer);
   }
 
   Future<void> reset() async {

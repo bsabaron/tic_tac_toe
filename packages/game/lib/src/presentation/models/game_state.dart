@@ -1,41 +1,27 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../domain/entities/board.dart';
 import '../../domain/entities/player.dart';
 
+part 'game_state.freezed.dart';
+
 enum GameStatus { playing, won, draw }
 
-class GameState {
-  final Board board;
-  final Player currentPlayer;
-  final GameStatus status;
-  final List<int>? winnerCombination;
-
-  const GameState({
-    required this.board,
-    required this.currentPlayer,
-    required this.status,
-    this.winnerCombination,
-  });
+@freezed
+abstract class GameState with _$GameState {
+  const factory GameState({
+    required Board board,
+    required Player currentPlayer,
+    required GameStatus status,
+    List<int>? winnerCombination,
+  }) = _GameState;
 
   factory GameState.initial({required Player startingPlayer}) {
     return GameState(
-      board: Board(),
+      board: Board.initial(),
       currentPlayer: startingPlayer,
       status: GameStatus.playing,
       winnerCombination: null,
-    );
-  }
-
-  GameState copyWith({
-    Board? board,
-    Player? currentPlayer,
-    GameStatus? status,
-    List<int>? winnerCombination,
-  }) {
-    return GameState(
-      board: board ?? this.board,
-      currentPlayer: currentPlayer ?? this.currentPlayer,
-      status: status ?? this.status,
-      winnerCombination: winnerCombination ?? this.winnerCombination,
     );
   }
 }

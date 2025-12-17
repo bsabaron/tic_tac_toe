@@ -1,11 +1,13 @@
 import '../game_domain.dart';
 
 class MakeMoveUseCase {
-  void makeMove({
+  Board makeMove({
     required Board board,
     required int index,
     required Player player,
   }) {
-    board.cells[index] = Cell.filled(player);
+    final newCells = board.cells.toList();
+    newCells[index] = Cell.filled(player);
+    return board.copyWith(cells: newCells);
   }
 }

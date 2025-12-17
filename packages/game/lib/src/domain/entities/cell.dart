@@ -1,9 +1,17 @@
-import 'package:game/src/domain/entities/player.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'player.dart';
 
-class Cell {
-  final Player? player;
+part 'cell.freezed.dart';
 
-  const Cell.empty() : player = null;
+@freezed
+abstract class Cell with _$Cell {
+  const factory Cell({Player? player}) = _Cell;
 
-  const Cell.filled(this.player);
+  factory Cell.empty() {
+    return Cell(player: null);
+  }
+
+  factory Cell.filled(Player player) {
+    return Cell(player: player);
+  }
 }

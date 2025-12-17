@@ -13,7 +13,7 @@ void main() {
     });
 
     test('isEmpty should return true for empty cell', () {
-      const cell = Cell.empty();
+      final cell = Cell.empty();
 
       expect(cell.isEmpty, true);
       expect(cell.isFilled, false);

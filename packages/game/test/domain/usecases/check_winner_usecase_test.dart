@@ -12,7 +12,7 @@ void main() {
     const Player player2 = Player(id: 'id2', symbol: 'O', color: Colors.red);
 
     test('should return null when no winner', () {
-      final board = Board();
+      final board = Board.initial();
       final combination = useCase.getWinnerCombination(
         board: board,
         player: player1,
@@ -26,7 +26,7 @@ void main() {
       cells[0] = Cell.filled(player1);
       cells[1] = Cell.filled(player1);
       cells[2] = Cell.filled(player1);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -41,7 +41,7 @@ void main() {
       cells[3] = Cell.filled(player1);
       cells[4] = Cell.filled(player1);
       cells[5] = Cell.filled(player1);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -56,7 +56,7 @@ void main() {
       cells[6] = Cell.filled(player1);
       cells[7] = Cell.filled(player1);
       cells[8] = Cell.filled(player1);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -71,7 +71,7 @@ void main() {
       cells[0] = Cell.filled(player1);
       cells[3] = Cell.filled(player1);
       cells[6] = Cell.filled(player1);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -86,7 +86,7 @@ void main() {
       cells[1] = Cell.filled(player1);
       cells[4] = Cell.filled(player1);
       cells[7] = Cell.filled(player1);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -101,7 +101,7 @@ void main() {
       cells[2] = Cell.filled(player1);
       cells[5] = Cell.filled(player1);
       cells[8] = Cell.filled(player1);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -116,7 +116,7 @@ void main() {
       cells[0] = Cell.filled(player1);
       cells[4] = Cell.filled(player1);
       cells[8] = Cell.filled(player1);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -131,7 +131,7 @@ void main() {
       cells[2] = Cell.filled(player1);
       cells[4] = Cell.filled(player1);
       cells[6] = Cell.filled(player1);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -146,7 +146,7 @@ void main() {
       cells[0] = Cell.filled(player2);
       cells[1] = Cell.filled(player2);
       cells[2] = Cell.filled(player2);
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,
@@ -161,7 +161,7 @@ void main() {
       cells[0] = Cell.filled(player1);
       cells[1] = Cell.filled(player1);
       // Missing third cell
-      final board = Board.fromCells(cells);
+      final board = Board(cells: cells);
 
       final combination = useCase.getWinnerCombination(
         board: board,

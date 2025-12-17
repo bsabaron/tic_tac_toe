@@ -1,11 +1,13 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:ui';
 
-class Player {
-  final String id;
+part 'player.freezed.dart';
 
-  final String symbol;
-
-  final Color color;
-
-  const Player({required this.id, required this.symbol, required this.color});
+@freezed
+abstract class Player with _$Player {
+  const factory Player({
+    required String id,
+    required String symbol,
+    required Color color,
+  }) = _Player;
 }

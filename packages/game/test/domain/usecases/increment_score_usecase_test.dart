@@ -8,6 +8,9 @@ import 'increment_score_usecase_test.mocks.dart';
 
 @GenerateMocks([ScoreRepository])
 void main() {
+  final player1 = 'id1';
+  final player2 = 'id2';
+
   group('IncrementScoreUseCase', () {
     late IncrementScoreUseCase useCase;
     late MockScoreRepository mockRepository;
@@ -17,40 +20,38 @@ void main() {
       useCase = IncrementScoreUseCase(mockRepository);
     });
 
-    test('should increment player score via repository', () async {
-      const playerId = '1';
-      when(
-        mockRepository.incrementPlayerScore(playerId),
-      ).thenAnswer((_) async => {});
+    test('should increment player score from 0 to 1', () async {
+      when(mockRepository.getScores()).thenAnswer((_) async => {});
 
-      await useCase.incrementPlayerScore(playerId);
+      await useCase.incrementPlayerScore(player1);
 
-      verify(mockRepository.incrementPlayerScore(playerId)).called(1);
+      verify(mockRepository.getScores()).called(1);
+      verify(mockRepository.saveScores({player1: 1})).called(1);
     });
 
-    test('should handle different player IDs', () async {
-      const playerId1 = '1';
-      const playerId2 = '2';
+    test('should increment existing player score', () async {
+      when(mockRepository.getScores()).thenAnswer((_) async => {player1: 2});
 
-      when(
-        mockRepository.incrementPlayerScore(any),
-      ).thenAnswer((_) async => {});
+      await useCase.incrementPlayerScore(player1);
 
-      await useCase.incrementPlayerScore(playerId1);
-      await useCase.incrementPlayerScore(playerId2);
-
-      verify(mockRepository.incrementPlayerScore(playerId1)).called(1);
-      verify(mockRepository.incrementPlayerScore(playerId2)).called(1);
+      verify(mockRepository.saveScores({player1: 3})).called(1);
     });
 
-    test('should propagate exception from repository', () async {
-      const playerId = '1';
+    test('should handle different player IDs independently', () async {
       when(
-        mockRepository.incrementPlayerScore(playerId),
-      ).thenThrow(Exception('Database error'));
+        mockRepository.getScores(),
+      ).thenAnswer((_) async => {player1: 1, player2: 5});
 
-      expect(() => useCase.incrementPlayerScore(playerId), throwsException);
-      verify(mockRepository.incrementPlayerScore(playerId)).called(1);
+      await useCase.incrementPlayerScore(player1);
+
+      verify(mockRepository.saveScores({player1: 2, player2: 5})).called(1);
+    });
+
+    test('should propagate exception from saveScores', () async {
+      when(mockRepository.getScores()).thenAnswer((_) async => {});
+      when(mockRepository.saveScores(any)).thenThrow(Exception('Save error'));
+
+      expect(() => useCase.incrementPlayerScore(player1), throwsException);
     });
   });
 }

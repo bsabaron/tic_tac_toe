@@ -6,6 +6,6 @@ class GetScoresUseCase {
   GetScoresUseCase(this._repository);
 
   Future<Map<String, int>> getScores() async {
-    return await _repository.getScores();
+    return _repository.getScores();
   }
 }

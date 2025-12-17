@@ -5,8 +5,9 @@ class IncrementScoreUseCase {
 
   IncrementScoreUseCase(this._repository);
 
-  /// Increments the score for the given player ID.
   Future<void> incrementPlayerScore(String playerId) async {
-    await _repository.incrementPlayerScore(playerId);
+    final scores = await _repository.getScores();
+    scores[playerId] = (scores[playerId] ?? 0) + 1;
+    return _repository.saveScores(scores);
   }
 }

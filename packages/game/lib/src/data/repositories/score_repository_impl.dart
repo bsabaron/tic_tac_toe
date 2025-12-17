@@ -8,26 +8,24 @@ import '../exceptions/game_repository_exception.dart';
 class ScoreRepositoryImpl implements ScoreRepository {
   static const String _scoresStorageKey = 'scores';
 
-  // Get scores from shared preferences
-  Future<Map<String, int>> _getStoredScores() async {
-    final String? scoresJson = await SharedPreferencesService.getString(
-      _scoresStorageKey,
-    );
-    if (scoresJson == null) return {};
-    final decoded = jsonDecode(scoresJson) as Map<String, dynamic>;
-    return Map<String, int>.from(decoded);
+  @override
+  Future<Map<String, int>> getScores() async {
+    try {
+      final String? scoresJson = await SharedPreferencesService.getString(
+        _scoresStorageKey,
+      );
+      if (scoresJson == null) return {};
+      final decoded = jsonDecode(scoresJson) as Map<String, dynamic>;
+      return Map<String, int>.from(decoded);
+    } catch (e) {
+      throw RepositoryOperationException('Failed to get all scores: $e');
+    }
   }
 
   @override
-  Future<void> incrementPlayerScore(String playerId) async {
-    try {
-      final scores = await _getStoredScores();
-      scores[playerId] = (scores[playerId] ?? 0) + 1;
-      final jsonString = jsonEncode(scores);
-      await SharedPreferencesService.setString(_scoresStorageKey, jsonString);
-    } catch (e) {
-      throw RepositoryOperationException('Failed to increment score: $e');
-    }
+  Future<void> saveScores(Map<String, int> scores) async {
+    final jsonString = jsonEncode(scores);
+    await SharedPreferencesService.setString(_scoresStorageKey, jsonString);
   }
 
   @override
@@ -36,15 +34,6 @@ class ScoreRepositoryImpl implements ScoreRepository {
       return SharedPreferencesService.remove(_scoresStorageKey);
     } catch (e) {
       throw RepositoryOperationException('Failed to reset scores: $e');
-    }
-  }
-
-  @override
-  Future<Map<String, int>> getScores() async {
-    try {
-      return _getStoredScores();
-    } catch (e) {
-      throw RepositoryOperationException('Failed to get all scores: $e');
     }
   }
 }

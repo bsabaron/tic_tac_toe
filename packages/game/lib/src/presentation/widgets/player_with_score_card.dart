@@ -49,17 +49,16 @@ class PlayerWithScoreCard extends StatelessWidget {
                     : SizedBox(height: 3),
               ],
             ),
-            RichText(
-              text: TextSpan(
-                style: Theme.of(context).textTheme.bodyMedium,
-                children: [
-                  TextSpan(text: 'Score: '),
-                  TextSpan(
-                    text: score.toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+            Row(
+              spacing: 4,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Score:'),
+                Text(
+                  score.toString(),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ],
         ),

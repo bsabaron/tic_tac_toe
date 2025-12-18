@@ -8,10 +8,17 @@ import '../exceptions/game_repository_exception.dart';
 class ScoreRepositoryImpl implements ScoreRepository {
   static const String _scoresStorageKey = 'scores';
 
+  final SharedPreferencesService _sharedPreferencesService;
+
+  const ScoreRepositoryImpl({
+    SharedPreferencesService? sharedPreferencesService,
+  }) : _sharedPreferencesService =
+           sharedPreferencesService ?? const SharedPreferencesService();
+
   @override
   Future<Map<String, int>> getScores() async {
     try {
-      final String? scoresJson = await SharedPreferencesService.getString(
+      final String? scoresJson = await _sharedPreferencesService.getString(
         _scoresStorageKey,
       );
       if (scoresJson == null) return {};
@@ -25,13 +32,13 @@ class ScoreRepositoryImpl implements ScoreRepository {
   @override
   Future<void> saveScores(Map<String, int> scores) async {
     final jsonString = jsonEncode(scores);
-    return SharedPreferencesService.setString(_scoresStorageKey, jsonString);
+    return _sharedPreferencesService.setString(_scoresStorageKey, jsonString);
   }
 
   @override
   Future<void> resetScores() async {
     try {
-      return SharedPreferencesService.remove(_scoresStorageKey);
+      return _sharedPreferencesService.remove(_scoresStorageKey);
     } catch (e) {
       throw RepositoryOperationException('Failed to reset scores: $e');
     }

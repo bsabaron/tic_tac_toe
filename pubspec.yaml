@@ -54,3 +54,13 @@ melos:
     format:
       description: Format code in all packages
       run: melos exec -- dart format .
+
+    # Generate coverage report
+    coverage:
+      steps:
+        - melos exec -- flutter test --coverage
+        - melos exec -- lcov --ignore-errors unused -r coverage/lcov.info "*.g.dart" "*.freezed.dart" "*.mocks.dart" "**/providers/**" -o coverage/lcov_cleaned.info
+        - melos exec -- genhtml coverage/lcov_cleaned.info --output-directory=coverage/
+      packageFilters:
+        dirExists: test
+      description: Generate coverage for the selected package.

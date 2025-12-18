@@ -35,6 +35,18 @@ void main() {
       verify(mockRepository.getScores()).called(1);
     });
 
+    test('should increment player score', () async {
+      const expectedScores = {'1': 5, '2': 3};
+      when(mockRepository.getScores()).thenAnswer((_) async => expectedScores);
+
+      final controller = container.read(scoreControllerProvider.notifier);
+      await controller.incrementPlayerScore('1');
+      final scores = await container.read(scoreControllerProvider.future);
+
+      expect(scores, {'1': 6, '2': 3});
+      verify(mockRepository.saveScores({'1': 6, '2': 3})).called(1);
+    });
+
     test('should reset all scores to empty map', () async {
       const initialScores = {'1': 5, '2': 3};
       when(mockRepository.getScores()).thenAnswer((_) async => initialScores);

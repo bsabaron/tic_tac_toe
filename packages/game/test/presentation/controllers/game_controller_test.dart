@@ -5,14 +5,7 @@ import 'package:game/src/presentation/controllers/game_controller.dart';
 import 'package:game/src/presentation/controllers/score_controller.dart';
 import 'package:game/src/presentation/models/game_state.dart';
 
-// Not using mockito because ScoreController is an AsyncNotifierProvider
-class MockScoreController extends ScoreController {
-  @override
-  Future<Map<String, int>> build() async => {};
-
-  @override
-  Future<void> incrementPlayerScore(String playerId) async {}
-}
+import 'score_controller_test_mock.dart';
 
 void main() {
   group('GameController', () {
@@ -20,13 +13,13 @@ void main() {
     late GameController controller;
     late Player player1;
     late Player player2;
-    late MockScoreController testScoreController;
+    late MockScoreController mockScoreController;
 
     setUp(() {
-      testScoreController = MockScoreController();
+      mockScoreController = MockScoreController();
       container = ProviderContainer(
         overrides: [
-          scoreControllerProvider.overrideWith(() => testScoreController),
+          scoreControllerProvider.overrideWith(() => mockScoreController),
         ],
       );
       controller = container.read(gameControllerProvider.notifier);
@@ -128,6 +121,10 @@ void main() {
       await controller.reset();
       final stateAfterSecondReset = container.read(gameControllerProvider);
       expect(stateAfterSecondReset.currentPlayer, player1);
+      expect(
+        stateAfterSecondReset.board.cells.every((cell) => cell.isEmpty),
+        true,
+      );
     });
 
     test('should alternate players correctly', () async {

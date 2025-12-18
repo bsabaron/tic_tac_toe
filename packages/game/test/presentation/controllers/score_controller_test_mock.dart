@@ -10,4 +10,7 @@ class MockScoreController extends AsyncNotifier<Map<String, int>>
 
   @override
   Future<void> incrementPlayerScore(String playerId) async {}
+
+  @override
+  Future<void> resetScores() async {}
 }

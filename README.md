@@ -7,58 +7,52 @@ utilisant Clean Architecture, Melos, et Riverpod V2.
 
 ### Prérequis
 
-1. Installer Flutter (3.27.0 ou supérieur):
-   - Suivre les instructions sur
-     [flutter.dev](https://flutter.dev/docs/get-started/install)
+- Flutter 3.27.0 ou supérieur
+  ([flutter.dev](https://flutter.dev/docs/get-started/install))
+- [Melos](https://melos.invertase.dev/) : `dart pub global activate melos`
 
-2. Installer [Melos](https://melos.invertase.dev/):
-
-```bash
-dart pub global activate melos
-```
-
-### Setup du projet
-
-1. Cloner le repository (si applicable)
-
-2. Installer les dépendances avec Melos:
+### Setup
 
 ```bash
-melos bootstrap
-```
-
-Cette commande va:
-
-- Exécuter `flutter pub get` dans tous les packages et apps
-
-## 🧪 Scripts Melos
-
-```bash
-# Bootstrap tous les packages
+# 1. Installer les dépendances
 melos bootstrap
 
-# Obtenir les dépendances
-melos get
+# 2. Générer les classes avec build_runner
+melos generate
+```
 
-# Nettoyer tous les packages
-melos clean
+## 📦 Structure
 
-# Lancer les tests
-melos test
+```
+tic_tac_toe/
+├── packages/
+│   ├── core/      # Utilitaires partagés
+│   └── game/      # Logique métier et UI du jeu
+└── lib/           # Application principale
+```
 
-# Analyser le code
-melos analyze
+## 🛠️ Commandes Melos
 
-# Formater le code
-melos format
+```bash
+# Dépendances
+melos get          # Récupérer les dépendances
 
-# Builder l'application
-melos build
+# Génération
+melos generate     # Générer le code avec build_runner
+
+# Qualité de code
+melos format       # Formater le code
+melos analyze      # Analyser le code
+
+# Tests
+melos test         # Lancer tous les tests
+melos coverage     # Générer le rapport de couverture
+
+# Nettoyage
+melos clean        # Nettoyer les builds
 ```
 
 ## 🧪 Tests
-
-Les tests unitaires sont organisés dans chaque package:
 
 ```bash
 # Tous les tests

@@ -15,7 +15,6 @@ dependencies:
     sdk: flutter
   game:
     path: packages/game
-  flutter_riverpod: ^3.0.3
 
 dev_dependencies:
   melos: ^7.3.0
@@ -64,3 +63,11 @@ melos:
       packageFilters:
         dirExists: test
       description: Generate coverage for the selected package.
+
+    # Generate code with build_runner
+    generate:
+      description: Generate code using build_runner
+      run: melos exec -- flutter pub run build_runner build --delete-conflicting-outputs
+      packageFilters:
+        dependsOn:
+          - build_runner

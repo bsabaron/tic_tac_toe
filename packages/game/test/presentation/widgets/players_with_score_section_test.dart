@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:game/game.dart';
-import 'package:game/src/presentation/widgets/players_with_score_section.dart';
 
 import '../controllers/game_controller_test_mock.dart';
 import '../controllers/score_controller_test_mock.dart';

@@ -13,6 +13,7 @@ workspace:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_riverpod: ^3.0.3
   game:
     path: packages/game
 

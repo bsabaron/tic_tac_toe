@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:game/src/presentation/game_presentation.dart';
-import 'package:game/src/presentation/widgets/players_with_score_section.dart';
 
 class GamePage extends ConsumerWidget {
   const GamePage({super.key});
